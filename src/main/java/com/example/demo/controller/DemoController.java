@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
-import com.example.demo.model.Pet;
+import com.example.demo.dto.PetRequestDto;
 import com.example.demo.dto.PetResponseDto;
 import com.example.demo.dto.PetCreatedResponseDto;
 import com.example.demo.service.PetStoreService;
@@ -19,12 +19,12 @@ public class DemoController {
     }
 
     @GetMapping("/pet/{id}")
-    public PetResponseDto getPet(@PathVariable Integer id) {
+    public PetResponseDto getPet(@PathVariable Long id) {
         return petStoreService.getPet(id);
     }
 
     @PostMapping("/pet")
-    public PetCreatedResponseDto savePet(@Valid @RequestBody Pet pet) {
-        return petStoreService.savePet(pet);
+    public PetCreatedResponseDto savePet(@Valid @RequestBody PetRequestDto request) {
+        return petStoreService.savePet(request);
     }
 }

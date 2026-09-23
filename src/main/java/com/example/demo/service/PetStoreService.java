@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.example.demo.model.Pet;
+import com.example.demo.dto.PetRequestDto;
 import com.example.demo.dto.PetResponseDto;
 import com.example.demo.dto.PetCreatedResponseDto;
 
@@ -24,30 +25,33 @@ public class PetStoreService {
         this.petStoreClient = petStoreClient;
     }
 
-    public PetResponseDto getPet(Integer id) {
+    public PetResponseDto getPet(Long id) {
         Pet response = petStoreClient.getPetById(id);
-        log.info("Respuesta del cliente PetStore: {}", response);
+        log.info("Pet obtenido con id: {}", id);
         return new PetResponseDto(
                 response.getId(),
                 response.getName(),
-                response.getStatus()
-        );
+                response.getStatus());
     }
 
-    public PetCreatedResponseDto savePet(Pet pet) {
-        Pet response = petStoreClient.postPet(pet);
-        log.info("Respuesta del cliente PetStore: {}", response);
+    public PetCreatedResponseDto savePet(PetRequestDto request) {
+        Pet pet = new Pet();
+        pet.setId(request.id());
+        pet.setName(request.name());
+        pet.setStatus(request.status());
 
-        UUID uuid = UUID.randomUUID();
+        Pet response = petStoreClient.postPet(pet);
+        log.info("Pet guardado: {}", response);
+
+        String transactionId = UUID.randomUUID().toString();
         String created = LocalDateTime.now().format(FORMATTER);
 
-        log.info("Registro con UUID: {} creado con fecha: {}", uuid, created);
+        log.info("Registro con UUID: {} creado con fecha: {}", transactionId, created);
 
         return new PetCreatedResponseDto(
                 response.getName(),
                 response.getStatus(),
-                uuid.toString(),
-                created
-        );
+                transactionId,
+                created);
     }
 }

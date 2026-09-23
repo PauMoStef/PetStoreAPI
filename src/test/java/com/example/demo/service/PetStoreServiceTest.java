@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.client.PetStoreClient;
 import com.example.demo.dto.PetCreatedResponseDto;
+import com.example.demo.dto.PetRequestDto;
 import com.example.demo.model.Category;
 import com.example.demo.model.Pet;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,8 @@ class PetStoreServiceTest {
     @Test
     void savePetSuccess() {
 
-        Pet inputPet = new Pet(null, new Category(1, "Dogs"), "Firulais", Collections.emptyList(),
-                Collections.emptyList(), "available");
-        Pet savedPet = new Pet(100, new Category(1, "Dogs"), "Firulais", Collections.emptyList(),
+        PetRequestDto inputPet = new PetRequestDto(100L, "Firulais", "available");
+        Pet savedPet = new Pet(100L, new Category(1, "Dogs"), "Firulais", Collections.emptyList(),
                 Collections.emptyList(), "available");
 
         when(petStoreClient.postPet(any(Pet.class))).thenReturn(savedPet);

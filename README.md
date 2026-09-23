@@ -26,11 +26,9 @@ La aplicación levanta en `http://localhost:8080`.
 
 ```json
 {
+  "id": 10000000023
   "name": "Firulais",
-  "status": "available",
-  "category": { "id": 1, "name": "Dogs" },
-  "photoUrls": [],
-  "tags": []
+  "status": "available"
 }
 ```
 

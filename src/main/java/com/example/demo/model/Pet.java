@@ -1,22 +1,18 @@
 package com.example.demo.model;
 
-import java.util.List;
-import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 public class Pet {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer id;
+    private Long id;
     private Category category;
-    
-    @NotBlank(message = "El campo 'Name' es obligatorio")
     private String name;
     private List<String> photoUrls;
     private List<Tag> tags;
-    @NotBlank(message = "El campo 'Status' es obligatorio")
     private String status;
 
-    public Pet(Integer id, Category category, String name, List<String> photoUrls, List<Tag> tags,
+    public Pet(Long id, Category category, String name, List<String> photoUrls, List<Tag> tags,
             String status) {
         this.id = id;
         this.category = category;
@@ -29,11 +25,12 @@ public class Pet {
     public Pet() {
     }
 
-    public Integer getId() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

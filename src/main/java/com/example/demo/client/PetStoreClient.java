@@ -18,7 +18,7 @@ public class PetStoreClient {
                 .build();
     }
 
-    public Pet getPetById(Integer id) {
+    public Pet getPetById(Long id) {
         return restClient.get()
                 .uri("/pet/{id}", id)
                 .retrieve()
