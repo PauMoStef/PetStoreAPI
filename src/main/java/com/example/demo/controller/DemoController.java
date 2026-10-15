@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import com.example.demo.dto.PetListRequestDTO;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -27,4 +30,10 @@ public class DemoController {
     public PetCreatedResponseDto savePet(@Valid @RequestBody PetRequestDto request) {
         return petStoreService.savePet(request);
     }
+
+    @GetMapping("/listpets")
+    public List<PetResponseDto> ListPets(@RequestBody PetListRequestDTO petsIds) {
+        return petStoreService.getPets(petsIds);
+    }
+
 }

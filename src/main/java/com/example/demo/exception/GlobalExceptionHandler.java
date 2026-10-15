@@ -7,6 +7,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -64,6 +65,16 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "Error inesperado en el servidor.");
         problemDetail.setTitle("Error Interno del Servidor");
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ResourceAccessException.class)
+    public ProblemDetail restClientError(ResourceAccessException ex) {
+        log.info(ex.getLocalizedMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.REQUEST_TIMEOUT,
+                "La request tomó más tiempo de lo esperado");
+        problemDetail.setTitle("Error timeout");
         return problemDetail;
     }
 }
